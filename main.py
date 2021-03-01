@@ -127,8 +127,8 @@ while True:
         print("Cant read frame")
         break
 
-    # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # gray = cv2.resize(gray, (400, 300))
+    #gray1 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #gray = cv2.resize(gray, (400, 300))
 
     gray = normalizeForVideoFunc(frame)
 
@@ -140,11 +140,12 @@ while True:
         cv2.putText(gray, "Face  detected",
                     (50, 80), font, 0.5, (0, 0, 255), 2)
     else:
-        print("error free")
+        cv2.putText(gray, "Face  notdetected",
+                    (50, 80), font, 0.5, (0, 0, 255), 2)
 
-    # print(haarFaces," ends here")
-    # to detect face
-    faces = detector(gray)
+    #################################################################
+
+    faces = detector(gray)  # to detect face
     # print(faces)
     for face in faces:
         x1 = face.left()
