@@ -12,7 +12,7 @@ detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("./shape_predictor_68_face_landmarks.dat")
 # cascade classifier
 
-face_cascade = cv2.CascadeClassifier("haarcascade_forntal_default.xml")
+face_cascade = cv2.CascadeClassifier("haarcascade_frontal_default.xml")
 eye_cascade = cv2.CascadeClassifier("eye.xml")
 
 # font
@@ -127,12 +127,12 @@ while True:
         print("Cant read frame")
         break
 
-    gray1 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # gray = cv2.resize(gray, (400, 300))
+    #gray1 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #gray = cv2.resize(gray, (400, 300))
 
     gray = normalizeForVideoFunc(frame)
 
-    haarFaces = face_cascade.detectMultiScale(gray1, scaleFactor=1.3, minNeighbors=5, minSize=(
+    haarFaces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(
         30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
     for (x, y, w, h) in haarFaces:
         cv2.rectangle(gray, (x, y), (x+w, y+h), (0, 255, 0), 2)
@@ -140,9 +140,12 @@ while True:
         cv2.putText(gray, "Face  detected",
                     (50, 80), font, 0.5, (0, 0, 255), 2)
     else:
-        print("error free")
-    # to detect face
-    faces = detector(gray)
+        cv2.putText(gray, "Face  notdetected",
+                    (50, 80), font, 0.5, (0, 0, 255), 2)
+
+    #################################################################
+
+    faces = detector(gray)  # to detect face
     # print(faces)
     for face in faces:
         x1 = face.left()
